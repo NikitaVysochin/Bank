@@ -21,7 +21,7 @@ const CardContainer = styled.div`
   box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.2);
   margin-bottom: 15px;
   margin-top: 5px;
-  background-color: ${({active})=>active ? 'red':'gold'};
+  background-color: ${({active})=>active ? 'rgb(197, 228, 255)':'rgb(237, 197, 255)'};
   cursor: pointer;
 `
 
