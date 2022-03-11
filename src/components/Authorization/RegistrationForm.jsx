@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import styled from 'styled-components'
@@ -39,11 +38,8 @@ const RegistrationForm = () => {
       username: login,
       password: password,
     }).then((res) => {
-      console.log('res', res); 
-        /*setOpen({ bool: true, message: 'авторизация прошла успешно', sev: 'success' });*/
         navigate('/authorization')
-      }).finally(console.log(login, password))
-    console.log(login, password)
+      })
   }
 
   const changeSubmit = (e) => {
@@ -54,16 +50,11 @@ const RegistrationForm = () => {
 		const repPass = formData.get("Repeat password")
     const login = formData.get("login")
     
-    if (repPass !== password) {
-			//setOpen({ bool: true, message: 'пароли не совпадают', sev: 'warning' });
-    } 
-    else {
-      Add(login, password)  
+    if (repPass === password) {
+      Add(login, password)
     }
   };
 
-  
-  
   return (<>
       <Form onSubmit={changeSubmit}>
         <DivInForm>
@@ -78,7 +69,6 @@ const RegistrationForm = () => {
               title="Введите не менее шести символов"
             />
         </DivInForm>
-
         <DivInForm>
           <Label >Password:</Label>
             <Input
@@ -92,7 +82,6 @@ const RegistrationForm = () => {
               title="Пароль должен содержать латинские буквы и хотя бы одну цифру"
             />
         </DivInForm>
-
         <DivInForm>
           <Label >Repeat password:</Label>
             <Input
@@ -100,7 +89,6 @@ const RegistrationForm = () => {
               type='password'
               placeholder='Repeat password'
               autoComplete="off"
-              
               required
               minLength="1"
               title="Пароль должен содержать латинские буквы и хотя бы одну цифру"

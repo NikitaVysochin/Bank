@@ -37,19 +37,21 @@ const AuthorizationForm = () => {
   const Add = async (login, password) => {
     await axios.post('http://localhost/auth/jwt/create/', {
       username: login,
-      password: password,
+      password,
     }).then((res) => {
-      console.log('res', res)
         localStorage.setItem('jwtToken', res.data.access)
-        document.cookie = `jwtToken=${res.data.refresh}`
-        /*setOpen({ bool: true, message: 'авторизация прошла успешно', sev: 'success' });*/
+        localStorage.setItem('jwtRefresh', res.data.refresh)
         navigate('/MainPage')
-      }).finally(console.log(login, password))
-
-    await axios.post('http://localhost/accounts/').then((res) => {
-      console.log('uid?', res)
+        console.log(res);
     })
 
+    await axios.post('http://localhost/accounts/', {}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        }
+    }).then((res) => {
+      localStorage.setItem('uuid', res.data.id)
+    })
   }
 
   const changeSubmit = (e) => {
@@ -61,8 +63,6 @@ const AuthorizationForm = () => {
 
     Add(login, password)  
   };
-
-  
   
   return (<>
       <Form onSubmit={changeSubmit}>
@@ -78,7 +78,6 @@ const AuthorizationForm = () => {
               title="Введите не менее шести символов"
             />
         </DivInForm>
-
         <DivInForm>
           <Label >Password:</Label>
             <Input

@@ -55,3 +55,7 @@ textarea,
 select {
   -webkit-appearance: none;
 }
+
+.tost{
+  background-color: red;
+}

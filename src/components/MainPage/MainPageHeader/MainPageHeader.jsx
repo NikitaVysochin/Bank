@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Button = styled.button`
@@ -20,22 +20,33 @@ const Div = styled.div`
 
 function MainPageHeader() {
   const navigate = useNavigate()
+  const location = useLocation()
 
   const add = 'Добавить карту'
+  const main = 'На главную'
   const pay = 'Платежи'
 
   const goToCreate = () => {
-    navigate('/createCard')
+    location.pathname == '/MainPage' ? navigate('/createCard') : navigate('/MainPage')
+  }
+
+  const goToPay = () => {
+    navigate('/payCards')
+  }
+
+  const exit = () => {
+    navigate('/')
+    localStorage.setItem('jwtToken', '')
   }
 
   return (
-    <>
-    <Div>
-      <Button onClick={goToCreate} >{add}</Button>
-      <Button>{pay}</Button>
-      <Button>Exit</Button>
-    </Div>
-    </>
+      <Div>
+        <Button onClick={goToCreate} >
+          {location.pathname == '/MainPage' ? add : main}
+        </Button>
+        <Button onClick={goToPay} >{pay}</Button>
+        <Button onClick={exit} >Exit</Button>
+      </Div>
   )
 }
 

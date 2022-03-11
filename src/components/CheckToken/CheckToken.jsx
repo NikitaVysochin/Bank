@@ -5,9 +5,7 @@ const Check = () => [
   {
     path: "/MainPage",
     element: localStorage.getItem("jwtToken") ? (
-      <>
-        <MainPage />
-      </>
+      <MainPage />
     ) : (
       <Navigate to="/authorization" />
     ),
