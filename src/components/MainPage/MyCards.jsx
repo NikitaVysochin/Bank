@@ -18,7 +18,7 @@ const MainContainer = styled.div`
   width: 90%;
   margin: auto auto;
   border-bottom: 1px solid black;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 `
 
 const RightContainer = styled.div`
@@ -32,7 +32,8 @@ const RightContainer = styled.div`
 `
 
 const AmountDiv = styled.div`
-  background-color: rgb(184, 255, 220);
+  font-size: 19px;
+  font-weight: bold;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -53,7 +54,6 @@ const DeleteButton = styled.div(()=>{
   }
 })
 
-
 function MyCards() {
   const cardsArray = useSelector(state => state.bank.cards)
   const dispatch = useDispatch()
@@ -64,7 +64,7 @@ function MyCards() {
   
   useEffect(() => {
     dispatch(Get())
-  }, [dispatch])
+  }, [])
   
   return (<> 
     <Form >

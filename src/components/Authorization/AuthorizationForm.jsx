@@ -42,8 +42,7 @@ const AuthorizationForm = () => {
         localStorage.setItem('jwtToken', res.data.access)
         localStorage.setItem('jwtRefresh', res.data.refresh)
         navigate('/MainPage')
-        console.log(res);
-    })
+      })
 
     await axios.post('http://localhost/accounts/', {}, {
         headers: {

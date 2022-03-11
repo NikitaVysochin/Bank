@@ -1,5 +1,7 @@
 import React from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { Exit } from '../../../feature/counter/BankSlice'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 
 const Button = styled.button`
@@ -19,6 +21,7 @@ const Div = styled.div`
 `
 
 function MainPageHeader() {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -37,6 +40,7 @@ function MainPageHeader() {
   const exit = () => {
     navigate('/')
     localStorage.setItem('jwtToken', '')
+    dispatch(Exit())
   }
 
   return (

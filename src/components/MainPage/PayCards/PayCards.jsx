@@ -14,9 +14,12 @@ const MainContainer = styled.div`
 const CardContainer = styled.div(()=>{
   return{
   display: 'flex',
+  'flex-direction': 'column',
   'align-items': 'center',
-  'justify-content': 'center',
-  height: 30,
+  'justify-content': 'space-around',
+  height: 90,
+  'border-radius': 7,
+  'box-shadow': '0px 0px 8px 0px rgba(34, 60, 80, 0.2)',
   'margin-bottom': 15,
   'margin-top': 5,
   'background-color': 'rgb(206, 255, 210)',
@@ -29,7 +32,7 @@ const InputsContainerDiv = styled.div(() => {
     display: 'flex',
     'flex-direction': 'column',
     'align-items': 'flex-end',
-    'justify-content': 'space-around',
+    'justify-content': 'space-around'
   }
 })
 
@@ -57,56 +60,62 @@ function PayCards() {
     type: 'transfer'
   })
 
-  const AddFromInp = (e, id) => {
-    setInputFrom(e.target.innerHTML)
+  const AddFromInp = (e, id, number) => {
+    setInputFrom(number)
     setPayPal({...payPal, from_card: id})
   }
 
-  const AddToInp = (e, id) => {
-    setInputTo(e.target.innerHTML)
-    setPayPal({...payPal, to_card: e.target.innerHTML})
+  const AddToInp = (e, number) => {
+    setInputTo(number)
+    setPayPal({...payPal, to_card: number})
   }
 
   const TransferMoney = () => {
     dispatch(TransferCards(payPal))
+    dispatch(Get())
   }
 
   useEffect(() => {
     dispatch(Get())
   }, [dispatch])
 
-
   return (
     <>
       <MainContainer>
-        <div> 
-          <InputsFromTo>
-            Откуда: <input value={inputFrom} type='number' />
-          </InputsFromTo> 
-          Выберите номер счета
-          {cardsArray.map(elem=>{
-            return <CardContainer >
-              <CardNumberDiv key={elem.id} onClick={(e)=>AddFromInp(e, elem.id)} >{elem.number}</CardNumberDiv>
-              <div>{elem.amount}$</div>
-            </CardContainer>
-          })}
-        </div>
         <InputsContainerDiv >
+          <div> 
+            <InputsFromTo>
+              Откуда: <input value={inputFrom} type='number' />
+            </InputsFromTo> 
+            Выберите номер счета
+            {cardsArray.map(elem=>{
+              return <CardContainer onClick={(e)=>AddFromInp(e, elem.id, elem.number)} >
+                <div>
+                  Имя: {elem.name}
+                </div>
+                <CardNumberDiv key={elem.id} >Номер карты: {elem.number}</CardNumberDiv>
+                <div>Den'gi: {elem.amount}$</div>
+              </CardContainer>
+            })}
+          </div>
+          <div>Сумма <input type='number' onChange={(e)=>setPayPal({...payPal, amount:  e.target.value})}/>
+          </div>
+          <TransferButton onClick={TransferMoney}>Перевести</TransferButton>
+        </InputsContainerDiv>
+        
           <div>
             <InputsFromTo>
               Куда: введите номер карты <input value={inputTo} type='number' onChange={(e)=>setInputTo(e.target.value)}/>
             </InputsFromTo>
             Выберите номер счета
             {cardsArray.map(elem=>{
-              return <CardContainer >
-                <CardNumberDiv key={elem.id} onClick={(e)=>AddToInp(e, elem.number)} >{elem.number}</CardNumberDiv>
+              return <CardContainer onClick={(e)=>AddToInp(e, elem.number)} >
+                <CardNumberDiv key={elem.id}  >{elem.number}</CardNumberDiv>
                 <div>{elem.amount}$</div>
               </CardContainer>
             })}
           </div>
-          <div>Сумма <input type='number' onChange={(e)=>setPayPal({...payPal, amount: e.target.value})}/></div>
-          <TransferButton onClick={TransferMoney}>Перевести</TransferButton>
-        </InputsContainerDiv>
+        
       </MainContainer>
     </>
   )
