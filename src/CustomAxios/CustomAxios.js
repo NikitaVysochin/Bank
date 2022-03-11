@@ -1,9 +1,11 @@
 import axios from 'axios';
+
  
-export const API =   axios.create(  {
+console.log(localStorage.getItem("jwtToken"),'api');
+export const API = token  => axios.create(  {
     baseURL:'http://localhost',
     headers:{
-      'Authorization': `Bearer ${localStorage.getItem("jwtToken")}`
+      'Authorization': `Bearer ${token}`
     }
   })
  

@@ -11,21 +11,19 @@ const MainContainer = styled.div`
   margin: auto auto;
 `
 
-const CardContainer = styled.div(()=>{
-  return{
-  display: 'flex',
-  'flex-direction': 'column',
-  'align-items': 'center',
-  'justify-content': 'space-around',
-  height: 90,
-  'border-radius': 7,
-  'box-shadow': '0px 0px 8px 0px rgba(34, 60, 80, 0.2)',
-  'margin-bottom': 15,
-  'margin-top': 5,
-  'background-color': 'rgb(206, 255, 210)',
-  cursor: 'pointer',
-  }
-})
+const CardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 90px; 
+  border-radius: 7px;
+  box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.2);
+  margin-bottom: 15px;
+  margin-top: 5px;
+  background-color: ${({active})=>active ? 'red':'gold'};
+  cursor: pointer;
+`
 
 const InputsContainerDiv = styled.div(() => {
   return {
@@ -59,6 +57,7 @@ function PayCards() {
     amount: '',
     type: 'transfer'
   })
+  
 
   const AddFromInp = (e, id, number) => {
     setInputFrom(number)
@@ -66,6 +65,7 @@ function PayCards() {
   }
 
   const AddToInp = (e, number) => {
+  
     setInputTo(number)
     setPayPal({...payPal, to_card: number})
   }
@@ -89,7 +89,7 @@ function PayCards() {
             </InputsFromTo> 
             Выберите номер счета
             {cardsArray.map(elem=>{
-              return <CardContainer onClick={(e)=>AddFromInp(e, elem.id, elem.number)} >
+              return <CardContainer active={payPal.from_card === elem.id} onClick={(e)=>AddFromInp(e, elem.id, elem.number)} >
                 <div>
                   Имя: {elem.name}
                 </div>

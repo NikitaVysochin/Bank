@@ -63,7 +63,8 @@ function MyCards() {
   }
   
   useEffect(() => {
-    dispatch(Get())
+ 
+      dispatch(Get())
   }, [])
   
   return (<> 
@@ -71,15 +72,13 @@ function MyCards() {
     { cardsArray.map((item, index) => {
       const date = new Date(item.date_expire)
       const dateCard = `${date.getMonth()+1}/${date.getFullYear()}`
-      return <>
-        <MainContainer key={item.id}>
+      return   <MainContainer key={item.id}>
           <TestCard item={item} dateCard={dateCard} />
           <RightContainer>
             <DeleteButton onClick={()=>Delete(item.id)}>Удалить карту</DeleteButton>
             <AmountDiv>{item.amount} $</AmountDiv>
           </RightContainer>
         </MainContainer>
-      </>
     })
     }
     </Form>

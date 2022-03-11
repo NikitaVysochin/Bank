@@ -30,7 +30,7 @@ function MainPageHeader() {
   const pay = 'Платежи'
 
   const goToCreate = () => {
-    location.pathname == '/MainPage' ? navigate('/createCard') : navigate('/MainPage')
+    location.pathname === '/MainPage' ? navigate('/createCard') : navigate('/MainPage')
   }
 
   const goToPay = () => {
@@ -39,14 +39,14 @@ function MainPageHeader() {
 
   const exit = () => {
     navigate('/')
-    localStorage.setItem('jwtToken', '')
+    localStorage.clear()
     dispatch(Exit())
   }
 
   return (
       <Div>
         <Button onClick={goToCreate} >
-          {location.pathname == '/MainPage' ? add : main}
+          {location.pathname === '/MainPage' ? add : main}
         </Button>
         <Button onClick={goToPay} >{pay}</Button>
         <Button onClick={exit} >Exit</Button>

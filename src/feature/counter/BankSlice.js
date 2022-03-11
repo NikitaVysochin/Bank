@@ -25,6 +25,7 @@ export const bankSlice = createSlice({
     },
 
     Exit(state, action){
+      
       state.cards = []
     }
   },
@@ -62,3 +63,5 @@ export const bankSlice = createSlice({
 export const { CreateCard, Delete, TransferCards, Exit } = bankSlice.actions
 
 export default bankSlice.reducer
+
+ 

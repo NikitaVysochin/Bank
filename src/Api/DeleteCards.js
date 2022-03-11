@@ -16,7 +16,7 @@ export const DeleteCards = createAsyncThunk(
           API.post('/auth/jwt/refresh/', {
             refresh: localStorage.getItem("jwtRefresh")
           }, {
-          }).then((res)=>{
+          }).then((res)=>{ 
             localStorage.setItem('jwtToken', res.data.access)
           })
         }
