@@ -1,14 +1,14 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import MainPageHeader from './MainPageHeader/MainPageHeader'
 import CreateCard from './CreateCard/FormCreateCard'
 import PayCards from './PayCards/PayCards'
 import MyCards from './MyCards'
+import { useAppSelector } from '../../hooks/hooks'
 
 
 function MainPage() {
-  const { status, error } = useSelector(state=>state.bank)
+  const { status, error } = useAppSelector(state=>state.bankSlice)
   const location = useLocation()
 
   return (

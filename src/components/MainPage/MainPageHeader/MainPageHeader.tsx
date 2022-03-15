@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Exit } from '../../../feature/counter/BankSlice'
 import { useDispatch } from 'react-redux'
@@ -20,14 +20,14 @@ const Div = styled.div`
   align-items: center;
 `
 
-function MainPageHeader() {
+const MainPageHeader: FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
 
-  const add = 'Добавить карту'
-  const main = 'На главную'
-  const pay = 'Платежи'
+  const add: string = 'Добавить карту'
+  const main: string = 'На главную'
+  const pay: string = 'Платежи'
 
   const goToCreate = () => {
     location.pathname === '/MainPage' ? navigate('/createCard') : navigate('/MainPage')

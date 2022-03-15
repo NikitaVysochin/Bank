@@ -1,6 +1,6 @@
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast'
 
-const notify = () => toast('Here is your toast.');
+const notify = () => toast('Here is your toast.')
 
 const Toste = () => {
   return (
@@ -8,5 +8,5 @@ const Toste = () => {
       <button onClick={notify}>Make me a toast</button>
       <Toaster />
     </div>
-  );
-};
+  )
+}

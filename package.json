@@ -25,6 +25,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "tsc:w": "tsc -w",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -45,5 +46,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.21",
+    "@types/react": "^17.0.40",
+    "@types/react-dom": "^17.0.13",
+    "@types/react-redux": "^7.1.23",
+    "@types/react-router-dom": "^5.3.3",
+    "typescript": "^4.6.2"
   }
 }

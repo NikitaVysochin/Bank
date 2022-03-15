@@ -4,7 +4,7 @@ import CheckToken from './components/CheckToken/CheckToken'
 import MainPageHeader from './components/MainPage/MainPageHeader/MainPageHeader'
 import CreateCard from './components/MainPage/CreateCard/FormCreateCard'
 import PayCards from './components/MainPage/PayCards/PayCards'
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
 

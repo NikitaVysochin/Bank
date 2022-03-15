@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, FC } from 'react'
 import { useLocation } from 'react-router-dom'
 import RegistrationForm from './RegistrationForm'
 import AuthorizationForm from './AuthorizationForm'
@@ -13,12 +13,12 @@ justify-content: center;
 align-items: center;
 `
 
-function Authorization() {
+const Authorization:FC = () => {
   const location = useLocation()
 
   return (<Div>
-    {location.pathname=='/registration' && <RegistrationForm />}
-    {location.pathname=='/authorization' && <AuthorizationForm />}
+      {location.pathname=='/registration' && <RegistrationForm />}
+      {location.pathname=='/authorization' && <AuthorizationForm />}
     </Div>)
 }
 

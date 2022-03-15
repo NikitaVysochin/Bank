@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState, FC } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import styled from 'styled-components'
@@ -31,10 +31,10 @@ let token = localStorage.getItem("jwtToken") || null
     border: 1px solid black;
   `
 
-const AuthorizationForm = () => {
+const AuthorizationForm: FC = () => {
   const navigate = useNavigate()
 
-  const Add = async (login, password) => {
+  const Add = async (login:string, password:string) => {
     await axios.post('http://localhost/auth/jwt/create/', {
       username: login,
       password,
@@ -56,13 +56,13 @@ const AuthorizationForm = () => {
     e.preventDefault();
 
     const formData = new FormData(e.target)
-		const password = formData.get("Password")
-    const login = formData.get("login")
+		const password = formData.get("Password") as string
+    const login = formData.get("login") as string
 
     Add(login, password)  
   };
   
-  return (<>
+  return (
       <Form onSubmit={changeSubmit}>
         <DivInForm>
           <Label >Login:</Label>
@@ -72,7 +72,6 @@ const AuthorizationForm = () => {
               autoComplete="off"
               required
               name="login"
-              minLength="1"
               title="Введите не менее шести символов"
             />
         </DivInForm>
@@ -84,7 +83,6 @@ const AuthorizationForm = () => {
               placeholder='Password'
               autoComplete="off"
               required
-              minLength="1"
               title="Пароль должен содержать латинские буквы и хотя бы одну цифру"
             />
         </DivInForm>
@@ -97,7 +95,7 @@ const AuthorizationForm = () => {
           </Link>
         </div>
       </Form>
-  </>);
+  );
 };
 
 export default AuthorizationForm

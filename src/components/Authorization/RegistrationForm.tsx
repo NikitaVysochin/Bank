@@ -1,4 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { FC } from 'react'
+import React, { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import styled from 'styled-components'
 
@@ -30,10 +31,10 @@ import styled from 'styled-components'
     border: 1px solid black;
   `
 
-const RegistrationForm = () => {
+const RegistrationForm: FC = () => {
   const navigate = useNavigate()
 
-  const Add = async (login, password) => {
+  const Add = async (login: string, password: string) => {
     await axios.post('http://localhost/auth/users/', {
       username: login,
       password: password,
@@ -46,16 +47,16 @@ const RegistrationForm = () => {
     e.preventDefault();
 
     const formData = new FormData(e.target)
-		const password = formData.get("Password")
-		const repPass = formData.get("Repeat password")
-    const login = formData.get("login")
+		const password = formData.get("Password") as string
+		const repPass = formData.get("Repeat password") as string
+    const login = formData.get("login") as string
     
     if (repPass === password) {
       Add(login, password)
     }
   };
 
-  return (<>
+  return (
       <Form onSubmit={changeSubmit}>
         <DivInForm>
           <Label >Login:</Label>
@@ -65,7 +66,6 @@ const RegistrationForm = () => {
               autoComplete="off"
               required
               name="login"
-              minLength="1"
               title="Введите не менее шести символов"
             />
         </DivInForm>
@@ -73,12 +73,9 @@ const RegistrationForm = () => {
           <Label >Password:</Label>
             <Input
               name="Password"
-              
               placeholder='Password'
               autoComplete="off"
-              
               required
-              minLength="1"
               title="Пароль должен содержать латинские буквы и хотя бы одну цифру"
             />
         </DivInForm>
@@ -90,7 +87,6 @@ const RegistrationForm = () => {
               placeholder='Repeat password'
               autoComplete="off"
               required
-              minLength="1"
               title="Пароль должен содержать латинские буквы и хотя бы одну цифру"
             />
         </DivInForm>
@@ -103,7 +99,7 @@ const RegistrationForm = () => {
           </Link>
         </div>
       </Form>
-  </>);
+  );
 };
 
 export default RegistrationForm

@@ -6,7 +6,7 @@ import { RefreshToken } from '../Api/RefreshToken/RefreshToken'
 export const Transfer = (state, action) => {
   const notify = () => toast('Перевод выполнен')
   const { from_card, to_card, amount, type } = action.payload
-  RefreshToken(API.post('/transactions/', {
+  RefreshToken(API(localStorage.getItem("jwtToken")).post('/transactions/', {
     from_card,
     to_card,
     amount,
@@ -16,7 +16,7 @@ export const Transfer = (state, action) => {
     notify()
   }).catch(err=>{
     if(err.err.response.status===400){
-
+      
     }
   }))
 }

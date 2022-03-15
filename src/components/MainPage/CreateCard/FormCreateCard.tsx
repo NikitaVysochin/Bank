@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, FC } from 'react'
 import { CreateCard } from '../../../feature/counter/BankSlice'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
@@ -44,12 +44,21 @@ const NameInp = styled.input`
   width: 50%;
 `
 
-function FormCreateCard() {
+interface newCard {
+    name: string,
+    account: string,
+    cvv: number,
+    amount: string,
+    number: number,   
+    date_expire: string
+}
+
+const FormCreateCard: FC = () => {
   const dispatch = useDispatch()
 
   const getRandomIntInclusive = () => {
-    const min = Math.ceil(1000000000000000);
-    const max = Math.floor(9999999999999999);
+    const min: number = Math.ceil(1000000000000000);
+    const max: number = Math.floor(9999999999999999);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
@@ -60,13 +69,13 @@ function FormCreateCard() {
     return showDate
   }
 
-  const cardNumber = getRandomIntInclusive()
-  const date = new Date()
+  const cardNumber: number = getRandomIntInclusive()
+  const date: Date = new Date()
   let time = date.getTime()+94672800000
-  const CardDate = showDate()
-  const cvv = Math.floor(Math.random() * (999 - 100 + 1)) + 100;
+  const CardDate: string = showDate()
+  const cvv: number = Math.floor(Math.random() * (999 - 100 + 1)) + 100;
 
-  const [newCard, setNewCard] = useState({
+  const [newCard, setNewCard] = useState<newCard>({
     name: '',
     account: localStorage.getItem("uuid"),
     cvv,
@@ -77,7 +86,7 @@ function FormCreateCard() {
 
   const Create = (e) => {
     e.preventDefault()
-    dispatch(CreateCard(newCard))
+    dispatch(CreateCard(newCard))    
   }
   
   return (

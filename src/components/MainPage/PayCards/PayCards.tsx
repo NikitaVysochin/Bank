@@ -1,8 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, FC } from 'react'
 import { TransferCards } from '../../../feature/counter/BankSlice'
 import { Get } from '../../../Api/Get'
 import styled from 'styled-components'
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 
 const MainContainer = styled.div`
   display: flex;
@@ -11,7 +11,11 @@ const MainContainer = styled.div`
   margin: auto auto;
 `
 
-const CardContainer = styled.div`
+interface CardContainerProps {
+  active: boolean
+}
+
+const CardContainer = styled.div<CardContainerProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,18 +50,35 @@ const TransferButton = styled.button`
   margin: 10px 0;
 `
 
-function PayCards() {
-  const dispatch = useDispatch()
-  const cardsArray = useSelector(state => state.bank.cards)
-  const [inputFrom, setInputFrom] = useState('')
-  const [inputTo, setInputTo] = useState('')
-  const [payPal, setPayPal] = useState({
+interface IpayPal {
+  from_card: string,
+  to_card: string,
+  amount: string,
+  type: 'transfer'
+}
+
+export interface ICard {
+  account: string,
+  amount: string,
+  cvv: string,
+  date_expire: string,
+  id: string,
+  name: string,
+  number: string,
+  owner: number
+}
+
+const PayCards: FC = () => {
+  const dispatch = useAppDispatch()
+  const cardsArray: ICard[] = useAppSelector(state=>state.bankSlice.cards)
+  const [inputFrom, setInputFrom] = useState<string>('')
+  const [inputTo, setInputTo] = useState<string>('')
+  const [payPal, setPayPal] = useState<IpayPal>({
     from_card: '',
     to_card: inputTo,
     amount: '',
     type: 'transfer'
   })
-  
 
   const AddFromInp = (e, id, number) => {
     setInputFrom(number)
@@ -65,7 +86,6 @@ function PayCards() {
   }
 
   const AddToInp = (e, number) => {
-  
     setInputTo(number)
     setPayPal({...payPal, to_card: number})
   }
@@ -85,11 +105,11 @@ function PayCards() {
         <InputsContainerDiv >
           <div> 
             <InputsFromTo>
-              Откуда: <input value={inputFrom} type='number' />
+              Откуда: <input defaultValue={inputFrom} type='number' />
             </InputsFromTo> 
             Выберите номер счета
-            {cardsArray.map(elem=>{
-              return <CardContainer active={payPal.from_card === elem.id} onClick={(e)=>AddFromInp(e, elem.id, elem.number)} >
+            {cardsArray.map((elem)=>{
+              return <CardContainer key={elem.id} active={payPal.from_card === elem.id} onClick={(e)=>AddFromInp(e, elem.id, elem.number)} >
                 <div>
                   Имя: {elem.name}
                 </div>
@@ -109,7 +129,7 @@ function PayCards() {
             </InputsFromTo>
             Выберите номер счета
             {cardsArray.map(elem=>{
-              return <CardContainer onClick={(e)=>AddToInp(e, elem.number)} >
+              return <CardContainer key={elem.id} active={payPal.from_card === elem.number} onClick={(e)=>AddToInp(e, elem.number)} >
                 <CardNumberDiv key={elem.id}  >{elem.number}</CardNumberDiv>
                 <div>{elem.amount}$</div>
               </CardContainer>

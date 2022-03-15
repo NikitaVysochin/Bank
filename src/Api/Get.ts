@@ -1,11 +1,12 @@
-import    { API } from "../CustomAxios/CustomAxios";
+import { API } from "../CustomAxios/CustomAxios"
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import axios from "axios";
+import { ICard } from "../components/MainPage/PayCards/PayCards"
+import axios from "axios"
 
  export const Get = createAsyncThunk(
   'cards/Get',
   async () => { 
-     return API(localStorage.getItem("jwtToken")).get('/cards/', { })
+     return API(localStorage.getItem("jwtToken")).get<ICard[]>('/cads/', { })
      .then((res) => {
        return res.data
      })
@@ -20,8 +21,9 @@ import axios from "axios";
             localStorage.setItem('jwtRefersh', res.data.refresh)
           })
         } else { 
-          console.log(err.response.status);
+          console.log(err.response.status)
         } 
+        console.log(err.response.status);
         throw err.response.status
       })
   } 

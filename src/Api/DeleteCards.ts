@@ -3,17 +3,16 @@ import axios from 'axios';
 import { API } from '../CustomAxios/CustomAxios';
 import { Delete } from '../feature/counter/BankSlice';
 
-export const DeleteCards = createAsyncThunk(
+export const DeleteCards = createAsyncThunk<any, string>(
   'cards/DeleteCards',
-  async (uuid, {dispatch}) => {
-    return API.delete(`/cards/${uuid}` )
-      .then(res => {
-        console.log(res);
+  async (uuid: string, {dispatch}) => {
+    const result = await API(localStorage.getItem("jwtToken")).delete(`/cards/${uuid}` )
+      .then(() => {
         dispatch(Delete(uuid))
       })
       .catch((err) => {
         if(err.response.status===401){
-          API.post('/auth/jwt/refresh/', {
+          API(localStorage.getItem("jwtToken")).post('/auth/jwt/refresh/', {
             refresh: localStorage.getItem("jwtRefresh")
           }, {
           }).then((res)=>{ 
@@ -23,5 +22,6 @@ export const DeleteCards = createAsyncThunk(
 
         throw err
       })
+      return result
   }
 )

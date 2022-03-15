@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, FC } from 'react'
 import { Get } from '../../Api/Get'
 import { DeleteCards } from '../../Api/DeleteCards'
 import TestCard from './TestCard/TestCard'
 import styled from 'styled-components'
+import { ICard } from './PayCards/PayCards'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
  
 const Form = styled.div`
   display: flex;
@@ -54,18 +55,13 @@ const DeleteButton = styled.div(()=>{
   }
 })
 
-function MyCards() {
-  const cardsArray = useSelector(state => state.bank.cards)
-  const dispatch = useDispatch()
-
-  const Delete = (id) => {
-    dispatch(DeleteCards(id))
-  }
+const MyCards: FC = () => {
+  const cardsArray:ICard[] = useAppSelector(state => state.bankSlice.cards)
+  const dispatch = useAppDispatch()
   
   useEffect(() => {
- 
-      dispatch(Get())
-  }, [])
+    dispatch(Get())
+  }, [dispatch])
   
   return (<> 
     <Form >
@@ -75,7 +71,7 @@ function MyCards() {
       return   <MainContainer key={item.id}>
           <TestCard item={item} dateCard={dateCard} />
           <RightContainer>
-            <DeleteButton onClick={()=>Delete(item.id)}>Удалить карту</DeleteButton>
+            <DeleteButton onClick={()=>dispatch(DeleteCards(item.id))}>Удалить карту</DeleteButton>
             <AmountDiv>{item.amount} $</AmountDiv>
           </RightContainer>
         </MainContainer>
