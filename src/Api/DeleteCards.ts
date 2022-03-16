@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { API } from '../CustomAxios/CustomAxios';
-import { Delete } from '../feature/counter/BankSlice';
+import { API } from './Interceptors/Interceptors';
+import { Delete } from '../feature/BankSlice';
 
 export const DeleteCards = createAsyncThunk<any, string>(
   'cards/DeleteCards',

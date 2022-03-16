@@ -1,15 +1,18 @@
 import React, { FC } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Exit } from '../../../feature/counter/BankSlice'
+import { Exit } from '../../../feature/BankSlice'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 
 const Button = styled.button`
   width: 15%;
   height: 5vh;
-  background-color: rgb(164, 255, 164);
+  background-color: rgb(87, 155, 87);
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
   border: 1px solid black;
   border-radius: 6px;
+  cursor: pointer;
 `
 
 const Div = styled.div`

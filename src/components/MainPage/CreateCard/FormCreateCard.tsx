@@ -1,7 +1,14 @@
 import React, { useState, FC } from 'react'
-import { CreateCard } from '../../../feature/counter/BankSlice'
+import { CreateCard } from '../../../feature/BankSlice'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
+import { Input } from 'antd'
+import { UserOutlined } from '@ant-design/icons'
+import { darkSber } from "@sberdevices/plasma-tokens/themes"
+import { sberBox } from "@sberdevices/plasma-tokens/typo"
+import { gradient } from "@sberdevices/plasma-tokens"
+import { Button } from "@sberdevices/plasma-ui"
+import 'antd/dist/antd.css'
 
 const Form = styled.form`
   display: flex;
@@ -15,9 +22,7 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 45%;
-  height: 32vh;
-  border: 1px solid black;
-  background-color: rgb(255, 179, 251);
+  height: 32vh;  
 `
 
 const CardContainer = styled.div`
@@ -27,22 +32,30 @@ const CardContainer = styled.div`
   align-items: center;
   flex-direction: column;
   width: 100%;
-  height: 80%;
-  background-color: rgb(255, 179, 251);
+  height: 100%;
+  ${sberBox[":root"]}
+  ${darkSber[":root"]}
+  border-radius: 7px;
+  background-image: ${gradient};
+  font-size: 1.3rem;
 `
 
 const CardNumberContainer = styled.div`
   display: flex;
   justify-content: space-around;
+  align-items: center;
   width: 80%;
-  height: 1.4rem;
-  
 `
 
-const NameInp = styled.input`
-  border: 1px solid black;
-  width: 50%;
-`
+const styleInputUser = {
+  height: '40px',
+  width: '50%'
+}
+
+const styleInputMoney = {
+  height: '40px',
+  width: '50%'
+}
 
 interface newCard {
     name: string,
@@ -95,14 +108,24 @@ const FormCreateCard: FC = () => {
         <CardContainer>
           <CardNumberContainer>
             <div>Введите Ваше имя</div> 
-            <NameInp onChange={(e)=>setNewCard({...newCard, name: e.target.value})}/>
+            <Input
+              onChange={(e)=>setNewCard({...newCard, name: e.target.value})}
+              style={styleInputUser}
+              placeholder="Enter your username"
+              prefix={<UserOutlined className="site-form-item-icon" />}
+            />
           </CardNumberContainer>
           <CardNumberContainer>
             <div>чит-код на деньги</div> 
-            <NameInp type='number' onChange={(e)=>setNewCard({...newCard, amount: e.target.value})}/>
+            <Input 
+              style={styleInputMoney} 
+              onChange={(e)=>setNewCard({...newCard, amount: e.target.value})} 
+              type='number' 
+              prefix="$" 
+              suffix="USD" />
           </CardNumberContainer>
+          <Button>Создать карту</Button>
         </CardContainer>
-        <button>Создать карту</button>
       </MainContainer>
     </Form>
   )

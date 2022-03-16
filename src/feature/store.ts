@@ -1,15 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import bankSlice from '../feature/counter/BankSlice'
+import bankSlice from './BankSlice'
 
 export const rootReducer = combineReducers({
   bankSlice
 })
-
-/*export const store = configureStore({
-  reducer: {
-    bank: bankSlice,
-  },
-})*/
 
 export const setupStore = () => {
   return configureStore ({

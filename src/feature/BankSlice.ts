@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { Get } from '../../Api/Get'
-import { CreateCards } from '../../Api/CreateCards'
-import { Transfer } from '../../Api/Transfer'
-import { ICard } from '../../components/MainPage/PayCards/PayCards'
+import { Get } from '../Api/Get'
+import { CreateCards } from '../Api/CreateCards'
+import { Transfer } from '../Api/Transfer'
+import { ICard } from '../components/MainPage/PayCards/PayCards'
  
 interface IInitialState {
   cards: ICard[]
@@ -76,5 +76,3 @@ export const bankSlice = createSlice({
 export const { CreateCard, Delete, TransferCards, Exit } = bankSlice.actions
 
 export default bankSlice.reducer
-
- 

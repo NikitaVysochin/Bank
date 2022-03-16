@@ -1,11 +1,11 @@
-import { API } from "../CustomAxios/CustomAxios"
-import { RefreshToken } from './RefreshToken/RefreshToken'
-import toast, { Toaster } from 'react-hot-toast'
+import { API } from "./Interceptors/Interceptors"
+import { api } from './Interceptors/Interceptors'
+import toast from 'react-hot-toast'
 
 export const CreateCards = (state, action) => {
   const notify = () => toast('Карта рождена')
   const { name, account, amount, cvv, number, date_expire } = action.payload
-  RefreshToken(API(localStorage.getItem("jwtToken")).post('/cards/', {
+  api.post('/cards/', {
     name,
     account,
     amount,
@@ -15,5 +15,5 @@ export const CreateCards = (state, action) => {
     }, {
   }).then(res => {
     notify()
-  }))
+  })
 }

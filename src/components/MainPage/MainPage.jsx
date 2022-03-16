@@ -6,7 +6,6 @@ import PayCards from './PayCards/PayCards'
 import MyCards from './MyCards'
 import { useAppSelector } from '../../hooks/hooks'
 
-
 function MainPage() {
   const { status, error } = useAppSelector(state=>state.bankSlice)
   const location = useLocation()

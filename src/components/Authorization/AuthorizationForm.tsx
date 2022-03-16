@@ -1,5 +1,6 @@
 import React, { useState, FC } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import {api} from '../../Api/Interceptors/Interceptors'
 import axios from 'axios'
 import styled from 'styled-components'
 let token = localStorage.getItem("jwtToken") || null
@@ -35,21 +36,18 @@ const AuthorizationForm: FC = () => {
   const navigate = useNavigate()
 
   const Add = async (login:string, password:string) => {
-    await axios.post('http://localhost/auth/jwt/create/', {
-      username: login,
-      password,
-    }).then((res) => {
-        localStorage.setItem('jwtToken', res.data.access)
-        localStorage.setItem('jwtRefresh', res.data.refresh)
-        navigate('/MainPage')
-        return axios.post('http://localhost/accounts/', {}, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          }
+    await api.post('http://localhost/auth/jwt/create/', {
+        username: login,
+        password,
       })
-      }).then((res) => {
-      localStorage.setItem('uuid', res.data.id)
-    })
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem('jwtToken', res.data.access);
+        localStorage.setItem('jwtRefresh', res.data.refresh);
+      })
+    const id = await api.post('http://localhost/accounts/').then(res => res.data.id);
+    localStorage.setItem('uuid', id);
+    navigate('/MainPage')
   }
 
   const changeSubmit = (e) => {

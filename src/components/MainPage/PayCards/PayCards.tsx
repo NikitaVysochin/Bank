@@ -1,8 +1,11 @@
 import React, { useEffect, useState, FC } from 'react'
-import { TransferCards } from '../../../feature/counter/BankSlice'
+import { TransferCards } from '../../../feature/BankSlice'
 import { Get } from '../../../Api/Get'
 import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
+import { Sber } from '../../Sber/Sber'
+import { StyledPreview } from '../../Sber/Sber'
+import { Button, TextField } from '@sberdevices/plasma-ui'
 
 const MainContainer = styled.div`
   display: flex;
@@ -19,15 +22,21 @@ const CardContainer = styled.div<CardContainerProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  height: 90px; 
+  justify-content: space-around; 
   border-radius: 7px;
   box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.2);
   margin-bottom: 15px;
+  border: 1px solid green;
   margin-top: 5px;
-  background-color: ${({active})=>active ? 'rgb(197, 228, 255)':'rgb(237, 197, 255)'};
+  background-color: ${({active})=>active ? 'rgb(86, 104, 87)':'transparent'};
   cursor: pointer;
 `
+
+const CardContainerTo = styled(CardContainer)`
+background-color: ${({active})=>active ? 'rgb(86, 104, 87)':'transparent'};
+  border: 1px solid green;
+`
+
 
 const InputsContainerDiv = styled.div(() => {
   return {
@@ -38,15 +47,21 @@ const InputsContainerDiv = styled.div(() => {
   }
 })
 
+const StyledSberDiv = styled(StyledPreview)`
+`
+
 const CardNumberDiv = styled.div`
   margin-right: 10px;
 `
 
 const InputsFromTo = styled.div`
   margin: 10px 0;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.3rem;
 `
 
-const TransferButton = styled.button`
+const TransferButton = styled(Button)`
   margin: 10px 0;
 `
 
@@ -105,18 +120,20 @@ const PayCards: FC = () => {
         <InputsContainerDiv >
           <div> 
             <InputsFromTo>
-              Откуда: <input defaultValue={inputFrom} type='number' />
+              Откуда: <TextField defaultValue={inputFrom} type='number' />
             </InputsFromTo> 
-            Выберите номер счета
-            {cardsArray.map((elem)=>{
-              return <CardContainer key={elem.id} active={payPal.from_card === elem.id} onClick={(e)=>AddFromInp(e, elem.id, elem.number)} >
-                <div>
-                  Имя: {elem.name}
-                </div>
-                <CardNumberDiv key={elem.id} >Номер карты: {elem.number}</CardNumberDiv>
-                <div>Den'gi: {elem.amount}$</div>
-              </CardContainer>
-            })}
+            <StyledPreview>
+              Выберите номер счета
+              {cardsArray.map((elem)=>{
+                return <CardContainer key={elem.id} active={payPal.from_card === elem.id} onClick={(e)=>AddFromInp(e, elem.id, elem.number)} >
+                  <div>
+                    Имя: {elem.name}
+                  </div>
+                  <CardNumberDiv key={elem.id} >Номер карты: {elem.number}</CardNumberDiv>
+                  <div>Den'gi: {elem.amount}$</div>
+                </CardContainer>
+              })}
+            </StyledPreview>
           </div>
           <div>Сумма <input type='number' onChange={(e)=>setPayPal({...payPal, amount:  e.target.value})}/>
           </div>
@@ -125,15 +142,16 @@ const PayCards: FC = () => {
         
           <div>
             <InputsFromTo>
-              Куда: введите номер карты <input value={inputTo} type='number' onChange={(e)=>setInputTo(e.target.value)}/>
+              Куда: введите номер карты 
+              <TextField value={inputTo} type='number' onChange={(e)=>setInputTo(e.target.value)}/>
             </InputsFromTo>
-            Выберите номер счета
+            <Sber>Выберите номер счета
             {cardsArray.map(elem=>{
-              return <CardContainer key={elem.id} active={payPal.from_card === elem.number} onClick={(e)=>AddToInp(e, elem.number)} >
+              return <CardContainerTo key={elem.id} active={payPal.to_card === elem.number} onClick={(e)=>AddToInp(e, elem.number)} >
                 <CardNumberDiv key={elem.id}  >{elem.number}</CardNumberDiv>
                 <div>{elem.amount}$</div>
-              </CardContainer>
-            })}
+              </CardContainerTo>
+            })}</Sber>
           </div>
         
       </MainContainer>

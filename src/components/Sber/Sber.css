@@ -1,0 +1,12 @@
+.cards {
+  display: flex;
+  flex-direction: column;
+  transition: all linear 0.2s;
+  overflow: hidden;
+}
+.cards.open {
+  max-height: 500px;
+}
+.cards.closed {
+  max-height: 0;
+}
